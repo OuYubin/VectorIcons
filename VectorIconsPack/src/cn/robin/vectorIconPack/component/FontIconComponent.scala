@@ -8,6 +8,7 @@ import cn.robin.vectorIconPack.api.IconFontEP
 import cn.robin.vectorIconPack.font.{IIconFont, IIconFonts}
 import com.intellij.openapi.components.ApplicationComponent
 import com.intellij.openapi.extensions.Extensions
+import com.intellij.util.ui.UIUtil
 
 /**
  * Created by robin on 15-4-8.
@@ -39,7 +40,7 @@ class FontIconComponent extends ApplicationComponent {
 
   def initFont(iconFontEP: IconFontEP) = {
     try {
-      val ttf = iconFontEP.getTtf;
+      val ttf = iconFontEP.getTtf
       val stream = iconFontEP.getFontClass.getResourceAsStream(ttf)
       val font = Font.createFont(Font.TRUETYPE_FONT, stream)
       if (GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(font)) {
@@ -86,14 +87,16 @@ class FontIconComponent extends ApplicationComponent {
   def patchFields(obj: Object, font: Font, iconFont: IIconFont) = {
     try {
       val clazz = obj.getClass
-      val urlField = clazz.getDeclaredField(MY_URL)
       val realIconField = clazz.getDeclaredField(MY_REAL_ICON)
+      val darkField = clazz.getDeclaredField("dark")
 
       val fontAwesomeIcon = new FontIcon(font, iconFont)
       realIconField.setAccessible(true)
       realIconField.set(obj, fontAwesomeIcon)
-      urlField.setAccessible(true)
-      urlField.set(obj, null)
+      if (UIUtil.isUnderDarcula) {
+        darkField.setAccessible(true)
+        darkField.set(obj, true)
+      }
     } catch {
       case ex: Exception => ex.printStackTrace()
     }

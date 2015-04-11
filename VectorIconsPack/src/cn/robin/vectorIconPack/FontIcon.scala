@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage
 import javax.swing.Icon
 
 import cn.robin.vectorIconPack.font.IIconFont
+import com.intellij.util.ui.UIUtil
 
 /**
  * Created by robin on 15-4-8.
@@ -36,7 +37,10 @@ class FontIcon(font: Font, iconFont: IIconFont) extends Icon {
     val graphics2d = bufferedImage.getGraphics.asInstanceOf[Graphics2D]
     graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_VRGB)
     graphics2d.setFont(deriveFont)
-    graphics2d.setColor(Color.DARK_GRAY)
+    if (!UIUtil.isUnderDarcula)
+      graphics2d.setColor(Color.DARK_GRAY)
+    else
+      graphics2d.setColor(Color.LIGHT_GRAY)
     graphics2d.drawString(String.valueOf(iconFont.getCode), 0, graphics2d.getFontMetrics.getAscent)
     graphics2d.dispose();
     g.drawImage(bufferedImage, x, y, null)
