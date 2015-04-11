@@ -35,7 +35,7 @@ public class AwesomeFonts extends AbstractIconFonts {
         FA_QUESTION("Help", '\uf128'),
         FA_CAMERA_RETRO("ProfileMemory", '\uf083'),
         FA_PRINT("Print", '\uf02f'),
-        FA_EIDT("EditSource", '\uf044'),
+        FA_EDIT("EditSource", '\uf044'),
         FA_FIRE("Compile", '\uf06d');
 
         String desc;
