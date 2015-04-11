@@ -1,0 +1,53 @@
+<idea-plugin version="2">
+  <id>cn.robin.vectorIconPack</id>
+  <name>Vector Icon Pack</name>
+  <version>1.0</version>
+  <vendor email="82324767@qq.com" url="https://github.com/OuYuBin">Robin Ou</vendor>
+
+  <description><![CDATA[
+      IDE using vector icons,such as Awesome etc.Provided extension point for custom icons.
+    ]]></description>
+
+  <change-notes><![CDATA[
+
+    ]]>
+  </change-notes>
+
+  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="131"/>
+
+  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+  <extensionPoints>
+    <extensionPoint name="iconFont" beanClass="cn.robin.vectorIconPack.api.IconFontEP"></extensionPoint>
+  </extensionPoints>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <extensions defaultExtensionNs="cn.robin.vectorIconPack">
+    <iconFont id="iconFont" implementClass="cn.robin.vectorIconPack.iconFont.IconFonts" ttf="iconfont.ttf"></iconFont>
+    <iconFont id="fontAwesome" implementClass="cn.robin.vectorIconPack.awesomeFont.AwesomeFonts"
+              ttf="fontawesome-webfont.ttf"></iconFont>
+  </extensions>
+
+  <application-components>
+    <!-- Add your application components here -->
+    <component>
+      <implementation-class>cn.robin.vectorIconPack.component.FontIconComponent</implementation-class>
+    </component>
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>
