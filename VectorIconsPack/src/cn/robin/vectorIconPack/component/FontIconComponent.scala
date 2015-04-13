@@ -109,6 +109,6 @@ class FontIconComponent extends ApplicationComponent {
   }
 
   override def getComponentName: String = {
-    return "FontAwesomeIconComponent"
+    return "FontIconComponent"
   }
 }
