@@ -12,9 +12,10 @@ public class AwesomeFonts extends AbstractIconFonts {
 
 
     enum AwesomeFont implements IIconFont {
-        FA_FOLDER_OPEN("Menu_open", '\uf114'),
+        FA_FOLDER_OPEN("Menu_open", '\uf07c'),
         FA_SAVE("Menu_saveall", '\uf0c7'),
         FA_REFRESH("Refresh", '\uf021'),
+        FA_SYNC("SynchronizeFS",'\uf2f1'),
         FA_UNDO("Undo", '\uf0e2'),
         FA_REPEAT("Redo", '\uf01e'),
         FA_SCISSORS("Menu_cut", '\uf0c4'),

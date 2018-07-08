@@ -6,13 +6,15 @@ import java.lang.reflect.{Field, Modifier}
 import cn.robin.vectorIconPack.FontIcon
 import cn.robin.vectorIconPack.api.IconFontEP
 import cn.robin.vectorIconPack.font.{IIconFont, IIconFonts}
+import cn.robin.vectorIconPack.image.FontImage
 import com.intellij.openapi.components.ApplicationComponent
 import com.intellij.openapi.extensions.Extensions
-import com.intellij.util.ui.UIUtil
+import com.intellij.util.ui.{JBImageIcon, UIUtil}
+import sun.misc.Unsafe
 
 /**
- * Created by robin on 15-4-8.
- */
+  * Created by robin on 15-4-8.
+  */
 class FontIconComponent extends ApplicationComponent {
 
   val CACHED_IMAGE_ICON: String = "$CachedImageIcon"
@@ -76,7 +78,6 @@ class FontIconComponent extends ApplicationComponent {
           iconFontArray.foreach(iconFonts => if (iconFonts.asInstanceOf[IIconFonts].getIConFont(fieldName) != null) patchFields(icon, iconFonts.asInstanceOf[IIconFonts].getFont, iconFonts.asInstanceOf[IIconFonts].getIConFont(fieldName)))
         }
       }
-
     } catch {
       case e: Exception => e.printStackTrace()
     }
@@ -86,21 +87,45 @@ class FontIconComponent extends ApplicationComponent {
 
   def patchFields(obj: Object, font: Font, iconFont: IIconFont) = {
     try {
+
       val clazz = obj.getClass
       val realIconField = clazz.getDeclaredField(MY_REAL_ICON)
+      System.out.println(obj)
       val darkField = clazz.getDeclaredField("dark")
-
-      val fontAwesomeIcon = new FontIcon(font, iconFont)
       realIconField.setAccessible(true)
-      realIconField.set(obj, fontAwesomeIcon)
+      var jBImageIcon = realIconField.get(obj).asInstanceOf[JBImageIcon]
+      System.out.println(jBImageIcon)
+      val fontImage = new FontImage(font, iconFont)
+      if (jBImageIcon == null) {
+        jBImageIcon = new JBImageIcon(fontImage)
+      }
+      else {
+        jBImageIcon.setImage(fontImage)
+      }
+      realIconField.set(obj,jBImageIcon)
+      System.out.println(jBImageIcon)
+
+      //val field = classOf[Unsafe].getDeclaredField("theUnsafe")
+      //field.setAccessible(true)
+      //val unSafe = field.get(null)
+
+      //val fontAwesomeIcon = new FontIcon(font, iconFont)
+      //realIconField.setAccessible(true)
+      //unSafe.asInstanceOf[Unsafe].putObjectVolatile(obj, unSafe.asInstanceOf[Unsafe].objectFieldOffset(realIconField), null)
+
+      //realIconField.set(obj, fontAwesomeIcon)
+
       if (UIUtil.isUnderDarcula) {
         darkField.setAccessible(true)
         darkField.set(obj, true)
       }
-    } catch {
+      //System.out.print(obj)
+      //val changeIconField = clazz.getDeclaredField(MY_REAL_ICON)
+      //System.out.println(changeIconField)
+    }
+    catch {
       case ex: Exception => ex.printStackTrace()
     }
-
   }
 
 

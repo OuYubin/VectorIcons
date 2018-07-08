@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
   <id>cn.robin.vectorIconPack</id>
   <name>Vector Icon Pack</name>
   <version>1.0</version>
@@ -22,7 +22,9 @@
   <depends>com.intellij.modules.lang</depends>
   -->
   <extensionPoints>
-    <extensionPoint name="iconFont" beanClass="cn.robin.vectorIconPack.api.IconFontEP"></extensionPoint>
+    <extensionPoint name="iconFont" beanClass="cn.robin.vectorIconPack.api.IconFontEP">
+      <with></with>
+    </extensionPoint>
   </extensionPoints>
 
   <extensions defaultExtensionNs="com.intellij">
@@ -32,7 +34,7 @@
   <extensions defaultExtensionNs="cn.robin.vectorIconPack">
     <iconFont id="iconFont" implementClass="cn.robin.vectorIconPack.iconFont.IconFonts" ttf="iconfont.ttf"></iconFont>
     <iconFont id="fontAwesome" implementClass="cn.robin.vectorIconPack.awesomeFont.AwesomeFonts"
-              ttf="fontawesome-webfont.ttf"></iconFont>
+              ttf="fa-regular-400.ttf"></iconFont>
   </extensions>
 
   <application-components>
